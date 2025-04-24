@@ -19,12 +19,5 @@ final class SessionController extends AbstractController
         ]);
     }
 
-    #[Route('/session/{id}', name: 'show_session')]
-    public function show(SessionRepository $sessionRepository,int $id): Response
-    {
-        $sessions = $sessionRepository->findBy(['training' => $id], []);
-        return $this->render('session/index.html.twig', [
-            'sessions' => $sessions
-        ]);
-    }
+   
 }
