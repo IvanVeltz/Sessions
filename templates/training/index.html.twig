@@ -3,7 +3,8 @@
 {% block title %}Liste des formations{% endblock %}
 
 {% block body %}
-{% for training in trainings %}
-    {{training.name}} <br>
-{% endfor %}
+    <h1>Liste des formations proposées</h1>
+    {% for training in trainings %}
+        <a href="{{ path('show_session', {id:training.id}) }}">{{training.name}} <br></a>
+    {% endfor %}
 {% endblock %}
