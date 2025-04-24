@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des formations{% endblock %}
+
+{% block body %}
+{% for training in trainings %}
+    {{training.name}} <br>
+{% endfor %}
+{% endblock %}
