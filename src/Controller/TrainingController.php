@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Training;
 use App\Repository\SessionRepository;
 use App\Repository\TrainingRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,11 +21,10 @@ final class TrainingController extends AbstractController
     }
 
     #[Route('/training/{id}', name: 'show_training')]
-    public function show(SessionRepository $sessionRepository,int $id): Response
+    public function show(Training $training): Response
     {
-        $sessions = $sessionRepository->findBy(['training' => $id], []);
-        return $this->render('session/index.html.twig', [
-            'sessions' => $sessions
+        return $this->render('training/show.html.twig', [
+            'training' => $training
         ]);
     }
 }

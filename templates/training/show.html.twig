@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail d'un training {% endblock %}
+
+{% block body %}
+    <h1>Détail du training {{training.name}}</h1>
+
+    {% for session in training.sessions %}
+        {{session.name}} <br>
+    {% endfor %}
+
+{% endblock %}
