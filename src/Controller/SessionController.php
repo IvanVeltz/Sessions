@@ -14,7 +14,7 @@ final class SessionController extends AbstractController
     public function index(SessionRepository $sessionRepository): Response
     {
         $sessions = $sessionRepository->findAll();
-        return $this->render('training/index.html.twig', [
+        return $this->render('session/index.html.twig', [
             'sessions' => $sessions,
         ]);
     }
