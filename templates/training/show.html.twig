@@ -4,9 +4,20 @@
 
 {% block body %}
     <h1>Détail du training {{training.name}}</h1>
-
-    {% for session in training.sessions %}
-        {{session.name}} <br>
-    {% endfor %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sessions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for session in training.sessions %}
+                <tr>
+                    <td>{{session.name}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
 
 {% endblock %}
