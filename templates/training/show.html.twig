@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>Détail de la formation {{training.name | lower}}</h1>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Sessions</th>
@@ -13,7 +13,7 @@
         <tbody>
             {% for session in training.sessions %}
                 <tr>
-                    <td><a href="{{path('show_session', {'id': session.id})}}">{{session.name}}</a></td>
+                    <td><a class="link-dark" href="{{path('show_session', {'id': session.id})}}">{{session.name}}</a></td>
                 </tr>
             {% endfor %}
         </tbody>

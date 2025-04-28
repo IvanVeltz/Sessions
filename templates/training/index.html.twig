@@ -4,7 +4,22 @@
 
 {% block body %}
     <h1>Liste des formations proposées</h1>
-    {% for training in trainings %}
-        <a href="{{ path('show_training', {id:training.id}) }}">{{training.name}} <br></a>
-    {% endfor %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Formation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for training in trainings %}
+            <tr>
+                <td>
+
+                <a class="link-dark" href="{{ path('show_training', {id:training.id}) }}"><div>{{training.name}}</div></a>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

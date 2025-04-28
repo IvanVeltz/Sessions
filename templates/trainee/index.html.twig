@@ -4,7 +4,20 @@
 
 {% block body %}
     <h1>Liste des stagiaires</h1>
-    {% for trainee in trainees %}
-        <a href="{{ path('show_trainee', {'id':trainee.id}) }}">{{trainee}} <br></a>
-    {% endfor %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trainee in trainees %}
+                <tr>
+                    <td><a class="link-dark" href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.lastName}}</div></a></td>
+                    <td><a class="link-dark" href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.firstName}}</div></a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

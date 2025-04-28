@@ -8,6 +8,28 @@
     <p>Date de naissance : {{ trainee.dateBirth | date("d-m-Y") }}</p>
     <p>Ville : {{ trainee.city }}</p>
     <p>E-mail : {{ trainee.mail}}</p>
+    <p>Téléphone : {{trainee.telephone}}</p>
+    <h2>Liste de sessions : </h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Session</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for session in trainee.sessions %}
+                <tr>
+                    <td>
+                        <div>
+                            <a class="link-dark" href="{{ path('show_session', {'id':session.id})}} ">
+                                {{session.name}}
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     
 
