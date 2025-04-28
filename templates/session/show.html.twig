@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail de la session {{session.name | lower}}{% endblock %}
+
+{% block body %}
+    <h1>Détail de la session {{session.name  | lower}}</h1>
+    
+    <h2>Informations :</h2>
+    <p>Début de la formation : {{ session.dateStart | date("d-m-Y") }}</p>
+    <p>Fin de la formation : {{ session.dateEnd | date("d-m-Y") }}</p>
+    <p>Nombre de places totales : {{ session.nbrPlaces }}</p>
+    <p>Formateur : {{session.trainer}}</p>
+
+    <h2>Listes des modules :</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Module</th>
+                <th>Nombre de jours</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for program in session.programs %}
+                <tr>
+                    <td>{{program.module.name}}</td>
+                    <td>{{program.nbrDays}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Listes des stagiaires :</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trainee in session.trainees %}
+                <tr>
+                    <td>{{trainee.lastName}}</td>
+                    <td>{{trainee.firstName}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
