@@ -16,6 +16,28 @@ class TraineeRepository extends ServiceEntityRepository
         parent::__construct($registry, Trainee::class);
     }
 
+    public function findTraineesNotInSession($value): array
+    {
+        $subQuery = $this->createQueryBuilder('t')
+            ->select('t.id')
+            ->join('t.sessions', 's')
+            ->andWhere('s.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getDQL()
+            ;
+
+        $qb = $this->createQueryBuilder('tr');
+        
+        
+        return $qb->select('tr')
+            ->where($qb->expr()->notIn('tr.id', $subQuery))
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     //    /**
     //     * @return Trainee[] Returns an array of Trainee objects
     //     */

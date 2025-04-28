@@ -66,6 +66,28 @@
 
     {% endif %}
 
+    <h2>Liste des stagiaires disponibles</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trainee in traineesNoRegister %}
+                <tr>
+                    
+                        <td><a class="link-dark" href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.lastName}}</div></a></td>
+                        <td><a class="link-dark" href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.firstName}}</div></a></td>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
     
 
 {% endblock %}
