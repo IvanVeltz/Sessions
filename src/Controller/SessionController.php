@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Session;
+use App\Entity\Trainee;
 use App\Repository\SessionRepository;
 use App\Repository\TraineeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,5 +32,35 @@ final class SessionController extends AbstractController
             'session' => $session,
             'traineesNoRegister' => $traineesNoRegister
         ]);
+    }
+
+ 
+    #[Route('/session/{sessionId}/addTrainee/{traineeId}', name: 'add_session_trainee')]
+    public function addTraineeToSession(int $sessionId,int  $traineeId, SessionRepository $sessionRepository, TraineeRepository $traineeRepository, EntityManagerInterface $entityManager)
+    {
+        $session = $sessionRepository->findOneBy(['id'=> $sessionId]);
+        $trainee = $traineeRepository->findOneBy(['id' => $traineeId]);
+        $nbrPlaces = $session->getNbrPlaces() - count($session->getTrainees());
+
+        $session->addTrainee($trainee);
+
+        $entityManager->persist($session);
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
+    }
+
+    #[Route('/session/{sessionId}/removeTrainee/{traineeId}', name: 'remove_session_trainee')]
+    public function removeTraineeToSession(int $sessionId,int  $traineeId, SessionRepository $sessionRepository, TraineeRepository $traineeRepository, EntityManagerInterface $entityManager)
+    {
+        $session = $sessionRepository->findOneBy(['id'=> $sessionId]);
+        $trainee = $traineeRepository->findOneBy(['id' => $traineeId]);
+        
+        $session->removeTrainee($trainee);
+
+        $entityManager->persist($session);
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
     }
 }

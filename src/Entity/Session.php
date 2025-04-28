@@ -109,14 +109,14 @@ class Session
     }
 
     /**
-     * @return Collection<int, trainee>
+     * @return Collection<int, Trainee>
      */
     public function getTrainees(): Collection
     {
         return $this->trainees;
     }
 
-    public function addTrainee(trainee $trainee): static
+    public function addTrainee(Trainee $trainee): static
     {
         if (!$this->trainees->contains($trainee)) {
             $this->trainees->add($trainee);
@@ -125,19 +125,19 @@ class Session
         return $this;
     }
 
-    public function removeTrainee(trainee $trainee): static
+    public function removeTrainee(Trainee $trainee): static
     {
         $this->trainees->removeElement($trainee);
 
         return $this;
     }
 
-    public function getTrainer(): ?trainer
+    public function getTrainer(): ?Trainer
     {
         return $this->trainer;
     }
 
-    public function setTrainer(?trainer $trainer): static
+    public function setTrainer(?Trainer $trainer): static
     {
         $this->trainer = $trainer;
 
