@@ -32,6 +32,7 @@ class Session
      * @var Collection<int, Trainee>
      */
     #[ORM\ManyToMany(targetEntity: Trainee::class, inversedBy: 'sessions')]
+    #[ORM\OrderBy(["lastName"=>"ASC"])]
     private Collection $trainees;
 
     #[ORM\ManyToOne(inversedBy: 'sessions')]

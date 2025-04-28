@@ -13,7 +13,7 @@ final class TraineeController extends AbstractController
     #[Route('/trainee', name: 'app_trainee')]
     public function index(TraineeRepository $traineeRepository): Response
     {
-        $trainees = $traineeRepository->findAll();
+        $trainees = $traineeRepository->findBy([], ['lastName' => 'ASC']);
         return $this->render('trainee/index.html.twig', [
             'trainees' => $trainees,
         ]);

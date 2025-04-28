@@ -12,39 +12,60 @@
     <p>Formateur : {{session.trainer}}</p>
 
     <h2>Listes des modules :</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Module</th>
-                <th>Nombre de jours</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for program in session.programs %}
-                <tr>
-                    <td>{{program.module.name}}</td>
-                    <td>{{program.nbrDays}}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    {% if session.programs | length > 0 %}
 
-    <h2>Listes des stagiaires :</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for trainee in session.trainees %}
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>{{trainee.lastName}}</td>
-                    <td>{{trainee.firstName}}</td>
+                    <th>Module</th>
+                    <th>Nombre de jours</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for program in session.programs %}
+                    <tr>
+                        <td>{{program.module.name}}</td>
+                        <td>{{program.nbrDays}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        
+        <p>Aucun module enregistré</p>
+        
+    {% endif %}
+    
+    <h2>Listes des stagiaires :</h2>
+
+    {% if session.trainees | length > 0 %}
+            
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trainee in session.trainees %}
+                    <tr>
+                        
+                            <td><a  href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.lastName}}</div></a></td>
+                            <td><a  href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.firstName}}</div></a></td>
+                        
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+
+        <p>Aucun stagiaire inscrit</p>
+
+    {% endif %}
+
+    
 
 {% endblock %}
