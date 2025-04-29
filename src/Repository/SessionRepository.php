@@ -16,6 +16,7 @@ class SessionRepository extends ServiceEntityRepository
         parent::__construct($registry, Session::class);
     }
 
+    // fonction qui compte le nombre de jours ouvrables entre deux dates
     public function getNbOpenDays(\DateTimeInterface $dateStart, \DateTimeInterface $dateEnd)
     {
         $arrBankHolidays = array(); // Tableau des jours fériés
@@ -64,6 +65,8 @@ class SessionRepository extends ServiceEntityRepository
 
         return $nbDaysOpen;
     }
+
+    
 
     //    /**
     //     * @return Session[] Returns an array of Session objects

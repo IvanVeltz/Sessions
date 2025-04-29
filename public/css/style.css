@@ -14,3 +14,14 @@ a.btn-secondary {
 	pointer-events: none;
 	cursor: default;
 }
+
+.main-container {
+    display: flex;
+    flex-wrap: wrap; /* Permet à la flexbox de passer à la ligne si nécessaire */
+}
+
+.module-container, .trainee-container {
+    flex: 1 1 50%; /* Prend 50% de l'espace avec un comportement adaptable */
+    box-sizing: border-box; /* Inclut padding et bordures dans les dimensions */
+    padding: 10px; /* Espacement intérieur pour une meilleure présentation */
+}

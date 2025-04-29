@@ -16,6 +16,29 @@ class ModuleRepository extends ServiceEntityRepository
         parent::__construct($registry, Module::class);
     }
 
+    public function findModulesNotInSession($value): array
+    {
+        $subQuery = $this->createQueryBuilder('m')
+            ->select('m.id')
+            ->join('m.programs', 'p')
+            ->join('p.session', 's')
+            ->andWhere('s.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getDQL()
+            ;
+
+        $qb = $this->createQueryBuilder('mo');
+        
+        
+        return $qb->select('mo')
+            ->where($qb->expr()->notIn('mo.id', $subQuery))
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     //    /**
     //     * @return Module[] Returns an array of Module objects
     //     */

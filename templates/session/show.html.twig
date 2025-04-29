@@ -12,88 +12,112 @@
     <p>Nombre de places totales : {{ session.nbrPlaces }}</p>
     <p>Formateur : {{session.trainer}}</p>
 
-    <h2>Listes des modules :</h2>
-    {% if session.programs | length > 0 %}
-
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Module</th>
-                    <th>Nombre de jours</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for program in session.programs %}
-                    <tr>
-                        <td>{{program.module.name}}</td>
-                        <td>{{program.nbrDays}}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-    {% else %}
-        
-        <p>Aucun module enregistré</p>
-        
-    {% endif %}
-    
-    <h2>Listes des stagiaires : ({{ session.trainees|length }}/{{ session.nbrPlaces }})</h2>
-
-    {% if session.trainees | length > 0 %}
-            
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for trainee in session.trainees %}
-                    <tr>
-                        
-                            <td><a class="link-dark" href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.lastName}}</div></a></td>
-                            <td><a class="link-dark" href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.firstName}}</div></a></td>
-                            <td><a href="{{path('remove_session_trainee',{'traineeId': trainee.id, 'sessionId': session.id} )}}" class="btn btn-danger">Retirer de la session</a></td>
-
-                        
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-    {% else %}
-
-        <p>Aucun stagiaire inscrit</p>
-
-    {% endif %}
-
-    <h2>Liste des stagiaires disponibles</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for trainee in traineesNoRegister %}
-                <tr>
-                    
-                        <td><a class="link-dark" href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.lastName}}</div></a></td>
-                        <td><a class="link-dark" href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.firstName}}</div></a></td>
-                        {% if session.trainees | length <  session.nbrPlaces %}
-                        <td><a href="{{path('add_session_trainee',{'traineeId': trainee.id, 'sessionId': session.id} )}}" class="btn btn-primary">Ajouter à la session</a></td>                        
-                        {% else %}
-                        <td><a href="/" class="btn btn-secondary">Session pleine</a></td>
-                        {% endif %}
-                    
-                </tr>
+    <main class="main-container">
+        <div class="module-container">
+            {% set totalNbDays = 0 %}
+            {% for program in session.programs %}
+                {% set totalNbDays = totalNbDays + program.nbrDays %} 
             {% endfor %}
-        </tbody>
-    </table>
 
+            <h2>Listes des modules : {{totalNbDays}} / {{nbrDaysOpen}} jours </h2>
+            {% if session.programs | length > 0 %}
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Nombre de jours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for program in session.programs %}
+                            <tr>
+                                <td>{{program.module.name}}</td>
+                                <td>{{program.nbrDays}}</td>
+                                <td><a href="{{path('remove_session_program',{'programId': program.id, 'sessionId': session.id} )}}" class="btn btn-danger">Retirer de la session</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            {% else %}
+                
+                <p>Aucun module enregistré</p>
+                
+            {% endif %}
+
+            <h2>Liste des modules disponibles</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Module</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for module in modulesNoProgram %}
+                        <tr>
+            
+                                <td>{{module.name}}</td>
+            
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="trainee-container">
+            <h2>Listes des stagiaires : ({{ session.trainees|length }}/{{ session.nbrPlaces }})</h2>
+            {% if session.trainees | length > 0 %}
+            
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trainee in session.trainees %}
+                            <tr>
+            
+                                    <td><a class="link-dark" href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.lastName}}</div></a></td>
+                                    <td><a class="link-dark" href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.firstName}}</div></a></td>
+                                    <td><a href="{{path('remove_session_trainee',{'traineeId': trainee.id, 'sessionId': session.id} )}}" class="btn btn-danger">Retirer de la session</a></td>
+            
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Aucun stagiaire inscrit</p>
+            {% endif %}
+            <h2>Liste des stagiaires disponibles</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trainee in traineesNoRegister %}
+                        <tr>
+            
+                                <td><a class="link-dark" href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.lastName}}</div></a></td>
+                                <td><a class="link-dark" href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.firstName}}</div></a></td>
+                                {% if session.trainees | length <  session.nbrPlaces %}
+                                <td><a href="{{path('add_session_trainee',{'traineeId': trainee.id, 'sessionId': session.id} )}}" class="btn btn-primary">Ajouter à la session</a></td>
+                                {% else %}
+                                <td><a href="/" class="btn btn-secondary">Session pleine</a></td>
+                                {% endif %}
+            
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
 
 
     

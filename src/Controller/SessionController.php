@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Session;
 use App\Entity\Trainee;
+use App\Repository\ModuleRepository;
+use App\Repository\ProgramRepository;
 use App\Repository\SessionRepository;
 use App\Repository\TraineeRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,19 +25,34 @@ final class SessionController extends AbstractController
     }
 
     #[Route('/session/{id}', name: 'show_session')]
-    public function show(Session $session,SessionRepository $sessionRepository, TraineeRepository $traineeRepository, int $id): Response
+    public function show(Session $session,SessionRepository $sessionRepository, TraineeRepository $traineeRepository, ModuleRepository $moduleRepository, int $id): Response
     {
 
         $traineesNoRegister = $traineeRepository->findTraineesNotInSession($id);
+        $modulesNoProgram = $moduleRepository->findModulesNotInSession($id);
         $nbrDaysOpen = $sessionRepository->getNbOpenDays($session->getDateStart(), $session->getDateEnd());
 
         return $this->render('session/show.html.twig', [
             'session' => $session,
             'traineesNoRegister' => $traineesNoRegister,
-            'nbrDaysOpen' => $nbrDaysOpen
+            'nbrDaysOpen' => $nbrDaysOpen,
+            'modulesNoProgram' => $modulesNoProgram
         ]);
     }
 
+    #[Route('/session/{sessionId}/removeProgram/{programId}', name: 'remove_session_program')]
+    public function removeProgramToSession(int $sessionId,int  $programId, SessionRepository $sessionRepository, ProgramRepository $programRepository, EntityManagerInterface $entityManager)
+    {
+        $session = $sessionRepository->findOneBy(['id'=> $sessionId]);
+        $program = $programRepository->findOneBy(['id' => $programId]);
+        
+        $session->removeProgram($program);
+
+        $entityManager->persist($session);
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
+    }
  
     #[Route('/session/{sessionId}/addTrainee/{traineeId}', name: 'add_session_trainee')]
     public function addTraineeToSession(int $sessionId,int  $traineeId, SessionRepository $sessionRepository, TraineeRepository $traineeRepository, EntityManagerInterface $entityManager)
