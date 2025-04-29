@@ -8,6 +8,7 @@
     <h2>Informations :</h2>
     <p>Début de la formation : {{ session.dateStart | date("d-m-Y") }}</p>
     <p>Fin de la formation : {{ session.dateEnd | date("d-m-Y") }}</p>
+    <p>Nombre de jours totales : {{nbrDaysOpen}} jours</p>
     <p>Nombre de places totales : {{ session.nbrPlaces }}</p>
     <p>Formateur : {{session.trainer}}</p>
 

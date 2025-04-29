@@ -23,14 +23,16 @@ final class SessionController extends AbstractController
     }
 
     #[Route('/session/{id}', name: 'show_session')]
-    public function show(Session $session, TraineeRepository $traineeRepository, int $id): Response
+    public function show(Session $session,SessionRepository $sessionRepository, TraineeRepository $traineeRepository, int $id): Response
     {
 
         $traineesNoRegister = $traineeRepository->findTraineesNotInSession($id);
+        $nbrDaysOpen = $sessionRepository->getNbOpenDays($session->getDateStart(), $session->getDateEnd());
 
         return $this->render('session/show.html.twig', [
             'session' => $session,
-            'traineesNoRegister' => $traineesNoRegister
+            'traineesNoRegister' => $traineesNoRegister,
+            'nbrDaysOpen' => $nbrDaysOpen
         ]);
     }
 
