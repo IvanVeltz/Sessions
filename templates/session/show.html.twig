@@ -3,6 +3,9 @@
 {% block title %}Détail de la session {{session.name | lower}}{% endblock %}
 
 {% block body %}
+
+
+
     <h1>Détail de la session {{session.name  | lower}}</h1>
     
     <h2>Informations :</h2>
@@ -19,7 +22,7 @@
                 {% set totalNbDays = totalNbDays + program.nbrDays %} 
             {% endfor %}
 
-            <h2>Listes des modules : {{totalNbDays}} / {{nbrDaysOpen}} jours </h2>
+            <h2>Listes des modules : ({{totalNbDays}}/{{nbrDaysOpen}} jours) </h2>
             {% if session.programs | length > 0 %}
 
                 <table class="table table-striped">
@@ -34,7 +37,7 @@
                             <tr>
                                 <td>{{program.module.name}}</td>
                                 <td>{{program.nbrDays}}</td>
-                                <td><a href="{{path('remove_session_program',{'programId': program.id, 'sessionId': session.id} )}}" class="btn btn-danger">Retirer de la session</a></td>
+                                <td><a href="{{path('remove_session_program',{'programId': program.id, 'sessionId': session.id} )}}" class="btn btn-danger">Retirer le module</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -56,9 +59,19 @@
                 <tbody>
                     {% for module in modulesNoProgram %}
                         <tr>
-            
-                                <td>{{module.name}}</td>
-            
+                            
+                            <td>{{module.name}}</td>
+                                {% if totalNbDays < nbrDaysOpen %}
+                                <td><form action="{{ path('add_session_program', {'moduleId': module.id, 'sessionId': session.id }) }} " method="post">
+                                    <label for="days">Nombre de jours :</label>    
+                                    <input type="text" name="days" id="days">
+                                    
+                                    <input type="submit" name="submit" value="Ajouter Module" class="btn btn-primary">
+                                </form></td>
+                                {% else %}
+                                <td><a href="/" class="btn btn-secondary">Programme complet</a></td>
+                                {% endif %}
+                                
                         </tr>
                     {% endfor %}
                 </tbody>
