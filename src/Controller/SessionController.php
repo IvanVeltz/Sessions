@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Program;
 use App\Entity\Session;
 use App\Entity\Trainee;
+use App\Form\SessionType;
 use App\Repository\ModuleRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\SessionRepository;
@@ -23,6 +24,30 @@ final class SessionController extends AbstractController
         $sessions = $sessionRepository->findAll();
         return $this->render('session/index.html.twig', [
             'sessions' => $sessions,
+        ]);
+    }
+
+    #[Route('/session/new', name: 'new_session')]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $session = new Session();
+
+        $form = $this->createForm(SessionType::class, $session);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $session = $form->getData();
+
+            $entityManager->persist($session);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_session');
+        }
+
+        return $this->render('session/new.html.twig', [
+            'formAddSession'=>$form,
         ]);
     }
 

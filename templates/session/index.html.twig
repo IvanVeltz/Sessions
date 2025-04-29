@@ -4,7 +4,21 @@
 
 {% block body %}
     <h1>Liste des sessions</h1>
-    {% for session in sessions %}
-        <a href="{{ path('show_session', {'id':session.id}) }}">{{session.name}} <br></a>
-    {% endfor %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Session</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for session in sessions %}
+            <tr>
+                <td><a class="link-dark" href="{{ path('show_session', {'id':session.id}) }}"><div>{{session.name}} </div></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+        
+    
 {% endblock %}
