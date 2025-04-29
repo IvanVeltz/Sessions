@@ -37,7 +37,7 @@
         
     {% endif %}
     
-    <h2>Listes des stagiaires :</h2>
+    <h2>Listes des stagiaires : ({{ session.trainees|length }}/{{ session.nbrPlaces }})</h2>
 
     {% if session.trainees | length > 0 %}
             
@@ -82,7 +82,11 @@
                     
                         <td><a class="link-dark" href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.lastName}}</div></a></td>
                         <td><a class="link-dark" href="{{path('show_trainee', {'id': trainee.id}) }}"><div>{{trainee.firstName}}</div></a></td>
-                        <td><a href="{{path('add_session_trainee',{'traineeId': trainee.id, 'sessionId': session.id} )}}" class="btn btn-primary">Ajouter à la session</a></td>
+                        {% if session.trainees | length <  session.nbrPlaces %}
+                        <td><a href="{{path('add_session_trainee',{'traineeId': trainee.id, 'sessionId': session.id} )}}" class="btn btn-primary">Ajouter à la session</a></td>                        
+                        {% else %}
+                        <td><a href="/" class="btn btn-secondary">Session pleine</a></td>
+                        {% endif %}
                     
                 </tr>
             {% endfor %}

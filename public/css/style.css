@@ -9,3 +9,8 @@ nav a:hover{
 a{
     text-decoration: none;
 }
+
+a.btn-secondary {
+	pointer-events: none;
+	cursor: default;
+}
