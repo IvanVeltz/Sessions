@@ -33,6 +33,7 @@ class TraineeRepository extends ServiceEntityRepository
         return $qb->select('tr')
             ->where($qb->expr()->notIn('tr.id', $subQuery))
             ->setParameter('val', $value)
+            ->orderBy('tr.lastName', 'ASC')
             ->getQuery()
             ->getResult()
             ;
