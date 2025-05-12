@@ -23,6 +23,10 @@
             <a class="navbar-brand" href="{{ path('new_trainee')}}">Ajouter un stagiaire</a>
             <a class="navbar-brand" href="{{ path('app_logout') }}">Se deconnecter</a>
         </nav>
+        {% else %}
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <a class="navbar-brand" href="{{ path('app_login') }}">Se connecter</a>
+        </nav>
         {% endif %}
         {% for type, messages in app.flashes %}
             {% for message in messages %}
