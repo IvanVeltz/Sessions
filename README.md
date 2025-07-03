@@ -25,7 +25,6 @@ Elle permet de gérer les **catégories de formation**, les **formations**, les 
 - 💅 **Frontend** : Twig, Bootstrap 5
 - 🔐 **Sécurité** : Authentification via Symfony Security (optionnel)
 - 🔄 **ORM** : Doctrine
-- 🧪 **Tests** : PHPUnit *(si applicable)*
 
 ---
 
