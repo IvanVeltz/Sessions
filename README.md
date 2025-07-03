@@ -37,13 +37,13 @@ Catégorie
      └──> Session
           ├──> Formateur(s)
           └──> Stagiaire(s)
+```
 ---
 
 ## 🚀 Installation du projet
 
 ### 1. Cloner le dépôt
-
-```bash
+```
 git clone https://github.com/tonutilisateur/sessions.git
 cd sessions
 ```
@@ -51,4 +51,34 @@ cd sessions
 ```
 composer install
 ```
+### 3. Configurez l'environnement
+Copiez le fichier .env si besoin
+```
+cp .env .env.local
+```
+Modifiez les paramètres de connexion à la base de données dans .env.local :
+```
+DATABASE_URL="mysql://utilisateur:motdepasse@127.0.0.1:3306/nom_de_base"
+```
+### 4. Créer la base de données
+```
+php bin/console doctrine:database:create
+```
+### 5. Exécuter les migrations
+```
+php bin/console doctrine:migrations:migrate
+```
+### 6. Lancer le serveur local
+```
+symfony server:start
+```
+L'application sera accessible à l’adresse :
+📍 http://localhost:8000
 
+## 👤 Auteur
+
+Développé par Ivan Veltz
+
+📧 Contact : ivan.veltz@live.fr
+
+🔗 LinkedIn : linkedin.com/in/ivan-veltz-5214ba142/
